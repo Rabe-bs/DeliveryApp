@@ -1,0 +1,105 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Rb.hassan\\source\\repos\\TestApiL1\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{048BADDE-0DE3-6C06-727C-75A278BA82B9}|TestApiL1\\TestApiL1.csproj|c:\\users\\rb.hassan\\source\\repos\\testapil1\\testapil1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{048BADDE-0DE3-6C06-727C-75A278BA82B9}|TestApiL1\\TestApiL1.csproj|solutionrelative:testapil1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{048BADDE-0DE3-6C06-727C-75A278BA82B9}|TestApiL1\\TestApiL1.csproj|c:\\users\\rb.hassan\\source\\repos\\testapil1\\testapil1\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{048BADDE-0DE3-6C06-727C-75A278BA82B9}|TestApiL1\\TestApiL1.csproj|solutionrelative:testapil1\\controllers\\weatherforecastcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{048BADDE-0DE3-6C06-727C-75A278BA82B9}|TestApiL1\\TestApiL1.csproj|c:\\users\\rb.hassan\\source\\repos\\testapil1\\testapil1\\services\\weatherforcastservic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{048BADDE-0DE3-6C06-727C-75A278BA82B9}|TestApiL1\\TestApiL1.csproj|solutionrelative:testapil1\\services\\weatherforcastservic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{048BADDE-0DE3-6C06-727C-75A278BA82B9}|TestApiL1\\TestApiL1.csproj|c:\\users\\rb.hassan\\source\\repos\\testapil1\\testapil1\\services\\iweatherforcastservic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{048BADDE-0DE3-6C06-727C-75A278BA82B9}|TestApiL1\\TestApiL1.csproj|solutionrelative:testapil1\\services\\iweatherforcastservic.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{048BADDE-0DE3-6C06-727C-75A278BA82B9}|TestApiL1\\TestApiL1.csproj|c:\\users\\rb.hassan\\source\\repos\\testapil1\\testapil1\\testapil1.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{048BADDE-0DE3-6C06-727C-75A278BA82B9}|TestApiL1\\TestApiL1.csproj|solutionrelative:testapil1\\testapil1.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IWeatherForCastServic.cs",
+              "DocumentMoniker": "C:\\Users\\Rb.hassan\\source\\repos\\TestApiL1\\TestApiL1\\Services\\IWeatherForCastServic.cs",
+              "RelativeDocumentMoniker": "TestApiL1\\Services\\IWeatherForCastServic.cs",
+              "ToolTip": "C:\\Users\\Rb.hassan\\source\\repos\\TestApiL1\\TestApiL1\\Services\\IWeatherForCastServic.cs",
+              "RelativeToolTip": "TestApiL1\\Services\\IWeatherForCastServic.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-05T07:29:45.971Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\Rb.hassan\\source\\repos\\TestApiL1\\TestApiL1\\Program.cs",
+              "RelativeDocumentMoniker": "TestApiL1\\Program.cs",
+              "ToolTip": "C:\\Users\\Rb.hassan\\source\\repos\\TestApiL1\\TestApiL1\\Program.cs",
+              "RelativeToolTip": "TestApiL1\\Program.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAABgAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-05T07:05:32.873Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "WeatherForecastController.cs",
+              "DocumentMoniker": "C:\\Users\\Rb.hassan\\source\\repos\\TestApiL1\\TestApiL1\\Controllers\\WeatherForecastController.cs",
+              "RelativeDocumentMoniker": "TestApiL1\\Controllers\\WeatherForecastController.cs",
+              "ToolTip": "C:\\Users\\Rb.hassan\\source\\repos\\TestApiL1\\TestApiL1\\Controllers\\WeatherForecastController.cs",
+              "RelativeToolTip": "TestApiL1\\Controllers\\WeatherForecastController.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAAAAwAAAAuAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-05T06:26:53.328Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TestApiL1",
+              "DocumentMoniker": "C:\\Users\\Rb.hassan\\source\\repos\\TestApiL1\\TestApiL1\\TestApiL1.csproj",
+              "RelativeDocumentMoniker": "TestApiL1\\TestApiL1.csproj",
+              "ToolTip": "C:\\Users\\Rb.hassan\\source\\repos\\TestApiL1\\TestApiL1\\TestApiL1.csproj",
+              "RelativeToolTip": "TestApiL1\\TestApiL1.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-08-05T06:22:57.08Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "WeatherForCastServic.cs",
+              "DocumentMoniker": "C:\\Users\\Rb.hassan\\source\\repos\\TestApiL1\\TestApiL1\\Services\\WeatherForCastServic.cs",
+              "RelativeDocumentMoniker": "TestApiL1\\Services\\WeatherForCastServic.cs",
+              "ToolTip": "C:\\Users\\Rb.hassan\\source\\repos\\TestApiL1\\TestApiL1\\Services\\WeatherForCastServic.cs",
+              "RelativeToolTip": "TestApiL1\\Services\\WeatherForCastServic.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-05T06:24:37.562Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
