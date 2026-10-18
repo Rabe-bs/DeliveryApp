@@ -1,0 +1,73 @@
+DeliveryApp.sln
+│
+├── 📁 1. DeliveryApp.Domain (طبقة النطاق - الجوهر المستقل تماماً)
+│   ├── 📁 Entities/          (جداول قاعدة البيانات والكائنات الأساسية)
+│   │   ├── BaseEntity.cs     (المعرف الفريد Guid، وتواريخ الإنشاء والتحديث)
+│   │   ├── User.cs           (المستخدمون: بيانات المصادقة، الأدوار Roles، والربط بالمحفظة والطلبات)
+│   │   ├── Restaurant.cs     (المطاعم، القوائم، وحالة التوفر)
+│   │   ├── Order.cs          (الطلبات، المجموع، الحالة، وتفاصيل الإلغاء والاسترجاع)
+│   │   ├── DeliveryTrip.cs   (رحلات التوصيل وتتبع مواقع السائقين)
+│   │   ├── Wallet.cs         (محفظة المستخدم لإدارة الرصيد والحركات)
+│   │   └── WalletTransaction.cs (سجل الحركات المالية: إيداع، خصم، واسترجاع Refund)
+│   │
+│   └── 📁 Enums/             (التعدادات والقيم الثابتة)
+│       ├── UserRole.cs       (Admin, Customer, RestaurantOwner, DeliveryGuy)
+│       └── OrderStatus.cs    (Pending, SentToRestaurant, AcceptedByRestaurant, RejectedByRestaurant, OutForDelivery, Delivered, CancelledByCustomer, FailedDueToError)
+│
+├── 📁 2. DeliveryApp.Application (طبقة التطبيق - منطق البزنس، العقود، والـ DTOs)
+│   ├── 📁 DTOs/              (عقود البيانات لنقلها بأمان بين السيرفر والعميل - مقسمة حسب الميزات)
+│   │   ├── 📁 Auth/          (ملفات المصادقة: LoginDto, RegisterDto, TokenResponseDto)
+│   │   ├── 📁 Orders/        (ملفات الطلبات: CreateOrderDto, OrderResponseDto)
+│   │   └── 📁 Wallets/       (ملفات المحفظة: WalletResponseDto, WalletTransactionDto)
+│   │
+│   ├── 📁 Interfaces/        (العقود والواجهات المجردة - Contracts فقط بدون كود تنفيذي)
+│   │   ├── IUnitOfWork.cs    (لإدارة حفظ التغييرات والـ Transactions الموحدة)
+│   │   ├── IGenericRepository.cs (الواجهة العامة لعمليات البيانات الأساسية)
+│   │   ├── IOrderRepository.cs   (واجهة مخصصة لاستعلامات الطلبات بـ LINQ)
+│   │   ├── ITokenService.cs      (عقد توليد الـ JWT Token)
+│   │   └── IWalletService.cs     (عقد العمليات المالية وإدارة الـ Refund)
+│   │
+│   ├── 📁 Services/          (منطق البزنس الأساسي وحالات الاستخدام Use Cases لو احتجناها)
+│   ├── 📁 Mappings/          (إعدادات AutoMapper للتحويل بين Entities و DTOs)
+│   └── 📁 Validators/        (مكتبة FluentValidation للتحقق من صحة بيانات الـ DTOs)
+│
+├── 📁 3. DeliveryApp.Infrastructure (طبقة البنية التحتية - التنفيذ الفعلي للخدمات وقاعدة البيانات)
+│   ├── 📁 Persistence/       (التعامل مع قاعدة البيانات)
+│   │   ├── AppDbContext.cs   (إعدادات Entity Framework Core وربط الجداول)
+│   │   └── 📁 Configurations/(إعدادات الجداول المتقدمة عبر Fluent API)
+│   │
+│   ├── 📁 Repositories/      (التنفيذ الفعلي للـ Repositories باستخدام LINQ وحقن الداتا)
+│   │   ├── GenericRepository.cs (تطبيق العمليات الأساسية Add, Update, Get, Delete)
+│   │   ├── OrderRepository.cs   (تطبيق الاستعلامات الخاصة بالطلبات)
+│   │   └── UnitOfWork.cs     (تطبيق حفظ التغييرات نهائياً CompleteAsync)
+│   │
+│   ├── 📁 Services/          (التنفيذ الفعلي للخدمات التقنية والخارجية)
+│   │   ├── TokenService.cs   (توليد وتوقيع وتشفير الـ JWT Token الفعلي)
+│   │   └── WalletService.cs  (تنفيذ عمليات الخصم، الإيداع، والـ Refund التلقائي للمحفظة)
+│   │
+│   └── 📁 Migrations/        (ملفات هجرة قاعدة البيانات Migration الخاصة بـ EF Core)
+│
+└── 📁 4. DeliveryApp.API (طبقة العرض والتحكم - الواجهات الخارجية ومنافذ الـ API)
+    ├── 📁 Controllers/       (نقاط الاتصال Endpoints التي يستهلكها الجوال أو الويب)
+    │   ├── AuthController.cs (تسجيل الدخول، إنشاء الحساب، وإصدار الـ Tokens)
+    │   ├── OrdersController.cs(استقبال الطلبات، التحقق، والتعديل مع حماية [Authorize])
+    │   └── WalletsController.cs(استعراض الرصيد والعمليات المالية)
+    │
+    ├── 📁 Hubs/              (SignalR Hubs للإشعارات اللحظية وتتبع حركة السائقين والمطاعم)
+    ├── 📁 Middlewares/       (معالجة الأخطاء العامة GlobalExceptionHandler لضمان تفعيل الـ Refund عند السقوط)
+    └── 📁 Extensions/        (ملفات حقن التبعيات DependencyInjection.cs لترتيب ربط الخدمات بكل طبقة)
+
+
+        CQRS command query responsibility segregation 
+
+    Features/
+ └── Wallets/
+      ├── Commands/
+      │    └── Deposit/
+      │         ├── DepositCommand.cs          // البيانات المطلوبة للإيداع
+      │         └── DepositCommandHandler.cs   // الكود الذي ينفذ الإيداع ويحفظه
+      │
+      └── Queries/
+           └── GetBalance/
+                ├── GetBalanceQuery.cs         // معرف المستخدم المطلوب جلب رصيده
+                └── GetBalanceQueryHandler.cs  // الكود الذي يجلب الرصيد ويعرضه
