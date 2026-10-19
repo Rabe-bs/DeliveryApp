@@ -2,6 +2,19 @@
   "version": 4,
   "targets": {
     "net10.0": {
+      "AWSSDK.Core/4.0.102.11": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "BCrypt.Net-Core/1.6.0": {
         "type": "package",
         "compile": {
@@ -356,6 +369,28 @@
     }
   },
   "libraries": {
+    "AWSSDK.Core/4.0.102.11": {
+      "sha512": "K9PP9/qHQ7pqSB0lYwStJrpXQ8P1xc7Fbn3CyPg8EX78p4+yz8dhIiwiRc3aVbVrUZxmPAPRvmZm+ey1euIXGg==",
+      "type": "package",
+      "path": "awssdk.core/4.0.102.11",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "awssdk.core.4.0.102.11.nupkg.sha512",
+        "awssdk.core.nuspec",
+        "images/AWSLogo.png",
+        "lib/net472/AWSSDK.Core.dll",
+        "lib/net472/AWSSDK.Core.xml",
+        "lib/net8.0/AWSSDK.Core.dll",
+        "lib/net8.0/AWSSDK.Core.xml",
+        "lib/netcoreapp3.1/AWSSDK.Core.dll",
+        "lib/netcoreapp3.1/AWSSDK.Core.xml",
+        "lib/netstandard2.0/AWSSDK.Core.dll",
+        "lib/netstandard2.0/AWSSDK.Core.xml",
+        "tools/account-management.ps1"
+      ]
+    },
     "BCrypt.Net-Core/1.6.0": {
       "sha512": "hsKiHGjrnlDW05MzuzzlD9gNP8YOW2KbZ+FbvISrilsKJJ76tXKhWey6psZX5sd7DczNpSU2U6ldjPoblk8BLw==",
       "type": "package",
@@ -909,6 +944,7 @@
   },
   "projectFileDependencyGroups": {
     "net10.0": [
+      "AWSSDK.Core >= 4.0.102.11",
       "BCrypt.Net-Core >= 1.6.0",
       "Domain >= 1.0.0",
       "FluentValidation >= 12.2.0",
@@ -976,6 +1012,10 @@
         "framework": "net10.0",
         "targetAlias": "net10.0",
         "dependencies": {
+          "AWSSDK.Core": {
+            "target": "Package",
+            "version": "[4.0.102.11, )"
+          },
           "BCrypt.Net-Core": {
             "target": "Package",
             "version": "[1.6.0, )"

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "TVMxz0sZhoA=",
+  "dgSpecHash": "J91WrEbjl2k=",
   "success": true,
   "projectFilePath": "C:\\Users\\Rb.hassan\\source\\repos\\Application\\Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Rb.hassan\\.nuget\\packages\\awssdk.core\\4.0.102.11\\awssdk.core.4.0.102.11.nupkg.sha512",
     "C:\\Users\\Rb.hassan\\.nuget\\packages\\bcrypt.net-core\\1.6.0\\bcrypt.net-core.1.6.0.nupkg.sha512",
     "C:\\Users\\Rb.hassan\\.nuget\\packages\\fluentvalidation\\12.2.0\\fluentvalidation.12.2.0.nupkg.sha512",
     "C:\\Users\\Rb.hassan\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\12.2.0\\fluentvalidation.dependencyinjectionextensions.12.2.0.nupkg.sha512",
