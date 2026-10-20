@@ -18,6 +18,10 @@ public class RestaurantConfiguration : IEntityTypeConfiguration<Restaurant>
             .IsRequired()
             .HasMaxLength(250);
 
+        builder.Property(r => r.PhoneNumber)
+                 .IsRequired()
+                 .HasMaxLength(20);
+
         builder.HasMany(r => r.Orders)
             .WithOne(o => o.Restaurant)
             .HasForeignKey(o => o.RestaurantId)

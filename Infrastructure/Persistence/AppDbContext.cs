@@ -24,7 +24,7 @@ public class AppDbContext : DbContext, IAppDbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        //    Fluent API   for any table by default 
+        //    Fluent API   for any table by default عشان ملفات الكونفقريشن يدور عليها ويرتبط فيها بما يرضي الله 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 }

@@ -22,6 +22,15 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.HasIndex(u => u.Email)
             .IsUnique(); // منع تكرار البريد الإلكتروني
 
+        builder.Property(p => p.PhoneNumber)
+             .IsRequired()
+             .HasMaxLength(15);
+
+        builder.Property(u => u.Role)
+            .HasConversion<string>()
+            .IsRequired();
+
+
         builder.Property(u => u.PasswordHash)
             .IsRequired();
 

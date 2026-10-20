@@ -30,7 +30,7 @@ builder.Services.AddValidatorsFromAssembly(typeof(DeliveryApp.Application.Featur
 // Behavior
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
-// قراءة إعدادات الـ Token مباشرة بأمان تام بدون BuildServiceProvider
+//         BuildServiceProvider
 var tokenSettings = builder.Configuration.GetSection(TokenSettings.SectionName).Get<TokenSettings>()
                     ?? throw new InvalidOperationException("TokenSettings configuration is missing.");
 
