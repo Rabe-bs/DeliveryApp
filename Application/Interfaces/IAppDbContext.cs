@@ -15,6 +15,7 @@ namespace Application.Interfaces
         DbSet<DeliveryTrip> DeliveryTrips { get; }
         DbSet<Wallet> Wallets { get; }
         DbSet<WalletTransaction> WalletTransactions { get; }
+        DbSet<Product> Products { get; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     }

@@ -1,7 +1,6 @@
 ﻿using DeliveryApp.Application.Features.Wallets.Commands.DeductBalance;
 using DeliveryApp.Application.Interfaces;
 using DeliveryApp.DeliveryApp.Domain.Entities;
-using DeliveryApp.DeliveryApp.Domain.Enums;
 using DeliveryApp.Domain.Entities;
 using DeliveryApp.Domain.Enums;
 using MediatR;
@@ -27,16 +26,30 @@ namespace DeliveryApp.Application.Features.Orders.Commands.CreateOrder
 
         public async Task<Guid> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            // 1. Validate total amount
-            if (request.TotalAmount <= 0)
+            if (request.Items == null || !request.Items.Any())
+            {
+                throw new InvalidOperationException("Order must contain at least one item.");
+            }
+
+            var order = new Order(
+                request.CustomerId,
+                request.RestaurantId,
+                request.DeliveryAddress
+            );
+
+            foreach (var item in request.Items)
+            {
+                order.AddItem(item.ProductId, item.Quantity, item.UnitPrice);
+            }
+
+            if (order.TotalAmount <= 0)
             {
                 throw new InvalidOperationException("Order total amount must be greater than zero.");
             }
 
-            // 2. Deduct balance from wallet using MediatR (Calls Wallet Vertical Slice)
             var deductionCommand = new DeductBalanceCommand(
                 request.CustomerId,
-                request.TotalAmount,
+                order.TotalAmount,
                 $"Payment for Order to Restaurant: {request.RestaurantId}"
             );
 
@@ -48,19 +61,6 @@ namespace DeliveryApp.Application.Features.Orders.Commands.CreateOrder
                 throw new InvalidOperationException("Insufficient wallet balance to complete the order.");
             }
 
-            // 3. Create Order Entity matching your exact Domain structure
-            var order = new Order
-            {
-                CustomerId = request.CustomerId,
-                RestaurantId = request.RestaurantId,
-                TotalAmount = request.TotalAmount,
-                DeliveryAddress = request.DeliveryAddress,
-                Status = OrderStatus.Pending,
-                IsRefunded = false,
-                CreatedAt = DateTime.UtcNow
-            };
-
-            // 4. Save via UnitOfWork
             await _unitOfWork.Orders.AddAsync(order);
             await _unitOfWork.CompleteAsync();
 

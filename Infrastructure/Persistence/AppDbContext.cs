@@ -19,6 +19,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<DeliveryTrip> DeliveryTrips => Set<DeliveryTrip>();
     public DbSet<Wallet> Wallets => Set<Wallet>();
     public DbSet<WalletTransaction> WalletTransactions => Set<WalletTransaction>();
+    public DbSet<Product> Products => Set<Product>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

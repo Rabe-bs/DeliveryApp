@@ -28,11 +28,12 @@ namespace DeliveryApp.Controllers
                 return Unauthorized(new { message = "Invalid user token or unauthorized access." });
             }
             var secureCommand = new CreateOrderCommand(
-                customerId,
-                command.RestaurantId,
-                command.TotalAmount,
-                command.DeliveryAddress
-            );
+     customerId,
+     command.RestaurantId,
+     command.DeliveryAddress,
+     command.TotalAmount,
+     command.Items 
+                              );
             var orderId = await _mediator.Send(secureCommand, cancellationToken);
 
             return Ok(new { orderId, message = "Order created successfully and wallet balance deducted." });

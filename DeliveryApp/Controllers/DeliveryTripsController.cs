@@ -33,7 +33,7 @@ namespace DeliveryApp.Controllers
 
             var result = await _sender.Send(command, cancellationToken);
 
-            return Ok(new { Success = result, Message = "تم تحديث حالة الرحلة بنجاح." });
+            return Ok(new { Success = result, Message = "Successfully updated delivery trip." });
         }
 
         public record UpdateTripStatusRequest(

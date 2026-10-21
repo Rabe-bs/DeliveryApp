@@ -1,5 +1,6 @@
 ﻿using DeliveryApp.Application.Features.Wallets.Commands.Deposit;
 using DeliveryApp.Application.Features.Wallets.Queries.GetBalance;
+using DeliveryApp.Application.Features.Wallets.Queries.GetWalletTransactions;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -38,25 +39,41 @@ namespace DeliveryApp.Controllers
 
 
         }
-
-        [HttpPost("deposit")]
-        public async Task<IActionResult> Deposit([FromBody] DepositCommand command)
+        //حركة المحفظة عشان محد يضيع فلوسه gg
+        [HttpGet("transactions")]
+        public async Task<IActionResult> GetTransactions(CancellationToken cancellationToken)
         {
-            // لضمان الامان استخراج المعرف وارساله للكوماند
             var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
             {
                 return Unauthorized(new { message = "Invalid user token or unauthorized access." });
             }
 
-            var result = await _mediator.Send(command);
+            var query = new GetWalletTransactionsQuery(userId);
+            var result = await _mediator.Send(query, cancellationToken);
 
-            if (result == null)
+            return Ok(result);
+        }
+
+        [HttpPost("deposit")]
+        public async Task<IActionResult> Deposit([FromBody] DepositCommand command, CancellationToken cancellationToken)
+        {
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(userIdClaim) || !Guid.TryParse(userIdClaim, out var userId))
+            {
+                return Unauthorized(new { message = "Invalid user token or unauthorized access." });
+            }
+
+            // بناء كومان آمن يمنع التلاعب بالمعرف
+            var secureCommand = new DepositCommand(userId, command.Amount, command.Description);
+            var result = await _mediator.Send(secureCommand, cancellationToken);
+
+            if (!result)
             {
                 return BadRequest(new { message = "Deposit operation failed." });
             }
 
-            return Ok(result);
+            return Ok(new { message = "Deposit successful." });
         }
     }
 }
