@@ -22,38 +22,6 @@ namespace DeliveryApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DeliveryApp.DeliveryApp.Domain.Entities.DeliveryTrip", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<decimal>("CurrentLatitude")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("CurrentLongitude")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<Guid>("DeliveryGuyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<bool>("IsCompleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("OrderId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("DeliveryTrips");
-                });
-
             modelBuilder.Entity("DeliveryApp.DeliveryApp.Domain.Entities.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -61,7 +29,8 @@ namespace DeliveryApp.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CancellationReason")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -83,8 +52,10 @@ namespace DeliveryApp.Migrations
                     b.Property<Guid>("RestaurantId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");
@@ -95,6 +66,8 @@ namespace DeliveryApp.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
+
+                    b.HasIndex("DeliveryGuyId");
 
                     b.HasIndex("RestaurantId");
 
@@ -123,6 +96,11 @@ namespace DeliveryApp.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
@@ -150,12 +128,21 @@ namespace DeliveryApp.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Role")
-                        .HasColumnType("int");
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -185,9 +172,6 @@ namespace DeliveryApp.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<bool>("IsDeposit")
-                        .HasColumnType("bit");
-
                     b.Property<int>("Type")
                         .HasColumnType("int");
 
@@ -202,6 +186,126 @@ namespace DeliveryApp.Migrations
                     b.HasIndex("WalletId");
 
                     b.ToTable("WalletTransactions");
+                });
+
+            modelBuilder.Entity("DeliveryApp.Domain.Entities.DeliveryTrip", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("AssignedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("CancelledAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("CurrentLatitude")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<decimal>("CurrentLongitude")
+                        .HasColumnType("decimal(18,6)");
+
+                    b.Property<DateTime?>("DeliveredAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("DeliveryGuyId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("PickedUpAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("DeliveryTrips");
+                });
+
+            modelBuilder.Entity("DeliveryApp.Domain.Entities.OrderItem", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderItem");
+                });
+
+            modelBuilder.Entity("DeliveryApp.Domain.Entities.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("DeliveryApp.Domain.Entities.Wallet", b =>
@@ -233,10 +337,14 @@ namespace DeliveryApp.Migrations
             modelBuilder.Entity("DeliveryApp.DeliveryApp.Domain.Entities.Order", b =>
                 {
                     b.HasOne("DeliveryApp.DeliveryApp.Domain.Entities.User", "Customer")
-                        .WithMany("orders")
+                        .WithMany()
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("DeliveryApp.DeliveryApp.Domain.Entities.User", "DeliveryGuy")
+                        .WithMany("orders")
+                        .HasForeignKey("DeliveryGuyId");
 
                     b.HasOne("DeliveryApp.DeliveryApp.Domain.Entities.Restaurant", "Restaurant")
                         .WithMany("Orders")
@@ -245,6 +353,8 @@ namespace DeliveryApp.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+
+                    b.Navigation("DeliveryGuy");
 
                     b.Navigation("Restaurant");
                 });
@@ -260,6 +370,47 @@ namespace DeliveryApp.Migrations
                     b.Navigation("wallet");
                 });
 
+            modelBuilder.Entity("DeliveryApp.Domain.Entities.DeliveryTrip", b =>
+                {
+                    b.HasOne("DeliveryApp.DeliveryApp.Domain.Entities.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("DeliveryApp.Domain.Entities.OrderItem", b =>
+                {
+                    b.HasOne("DeliveryApp.DeliveryApp.Domain.Entities.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DeliveryApp.Domain.Entities.Product", "Product")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("DeliveryApp.Domain.Entities.Product", b =>
+                {
+                    b.HasOne("DeliveryApp.DeliveryApp.Domain.Entities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Restaurant");
+                });
+
             modelBuilder.Entity("DeliveryApp.Domain.Entities.Wallet", b =>
                 {
                     b.HasOne("DeliveryApp.DeliveryApp.Domain.Entities.User", "User")
@@ -269,6 +420,11 @@ namespace DeliveryApp.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DeliveryApp.DeliveryApp.Domain.Entities.Order", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("DeliveryApp.DeliveryApp.Domain.Entities.Restaurant", b =>
@@ -281,6 +437,11 @@ namespace DeliveryApp.Migrations
                     b.Navigation("Wallet");
 
                     b.Navigation("orders");
+                });
+
+            modelBuilder.Entity("DeliveryApp.Domain.Entities.Product", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("DeliveryApp.Domain.Entities.Wallet", b =>

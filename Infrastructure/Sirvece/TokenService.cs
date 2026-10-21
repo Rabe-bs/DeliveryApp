@@ -1,6 +1,6 @@
 ﻿using DeliveryApp.Application.Interfaces;
+using DeliveryApp.Domain.Settings;
 using DeliveryApp.Infrastructure.Settings;
-using Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -13,23 +13,28 @@ namespace DeliveryApp.Infrastructure.Sirvece
 {
     public class TokenService : ITokenService
     {
-        private TokenSettings TokenSettings = new TokenSettings();
-        private readonly IConfiguration _configuration; // Option Pattern 
+        private readonly TokenSettings _tokenSettings;
+        private readonly IConfiguration _configuration;
         private readonly ILogger<TokenService> _logger;
 
         public TokenService(IConfiguration configuration, ILogger<TokenService> logger, IOptions<TokenSettings> options)
         {
             _configuration = configuration;
             _logger = logger;
-            TokenSettings = options.Value;
+            _tokenSettings = options.Value;
+
+            // حماية للتأكد من قراءة المفتاح وعدم تركها فارغة
+            if (string.IsNullOrEmpty(_tokenSettings.Secret))
+            {
+                throw new InvalidOperationException("JwtSettings:Secret is missing or empty in configuration.");
+            }
         }
 
         public string GenerateToken(Guid userId, string email, string role)
         {
             _logger.LogInformation("Generating JWT token for user ID: {UserId} with role: {Role}", userId, role);
 
-            // استخدام الـ Options Pattern مباشرة بدون الحاجة لقراءة الـ Configuration يدوياً داخل الدالة
-            var key = Encoding.ASCII.GetBytes(TokenSettings.Secret!);
+            var key = Encoding.UTF8.GetBytes(_tokenSettings.Secret);
 
             var claims = new List<Claim>
             {
@@ -41,9 +46,9 @@ namespace DeliveryApp.Infrastructure.Sirvece
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddDays(TokenSettings.DurationInDays),
-                Issuer = TokenSettings.Issuer,
-                Audience = TokenSettings.Audience,
+                Expires = DateTime.UtcNow.AddMinutes(_tokenSettings.ExpiryMinutes), 
+                Issuer = _tokenSettings.Issuer,
+                Audience = _tokenSettings.Audience,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 

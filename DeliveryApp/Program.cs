@@ -1,11 +1,8 @@
 using Application.Features.Auth.Command.Behaviors;
-using DeliveryApp.Domain.Settings;
 using DeliveryApp.Infrastructure;
 using FluentValidation;
-using Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using TokenSettings = DeliveryApp.Domain.Settings.TokenSettings;
@@ -21,20 +18,25 @@ builder.Services.AddInfrastructure(builder.Configuration);
 // MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(DeliveryApp.Application.Features.Wallets.Queries.GetBalance.GetBalanceQuery).Assembly));
 
-// 1. Options Pattern 
-builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection(TokenSettings.SectionName));
-
 // Validators
 builder.Services.AddValidatorsFromAssembly(typeof(DeliveryApp.Application.Features.Wallets.Queries.GetBalance.GetBalanceQuery).Assembly);
 
 // Behavior
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
-//         BuildServiceProvider
-var tokenSettings = builder.Configuration.GetSection(TokenSettings.SectionName).Get<TokenSettings>()
-                    ?? throw new InvalidOperationException("TokenSettings configuration is missing.");
+// Options Pattern Configuration & Binding
+builder.Services.Configure<TokenSettings>(builder.Configuration.GetSection(TokenSettings.SectionName));
 
-// 2. Authentication & JWT  مع  Options Pattern
+//  فحص آمن للتأكد من وجود القسم في ملف الإعداداته
+var jwtSection = builder.Configuration.GetSection(TokenSettings.SectionName);
+if (!jwtSection.Exists())
+{
+    throw new InvalidOperationException($"The configuration section '{TokenSettings.SectionName}' is missing in appsettings.json. Please ensure it exists in the API project.");
+}
+
+var tokenSettings = jwtSection.Get<TokenSettings>()!;
+
+// 2. Authentication & JWT مع Options Pattern
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -70,7 +72,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI(c =>
     {
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "DeliveryApp API V1");
-
         c.RoutePrefix = string.Empty;
     });
 }

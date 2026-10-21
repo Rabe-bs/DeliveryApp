@@ -54,7 +54,7 @@ namespace DeliveryApp.Application.Features.Auth.Commands.Login
                 Email = user.Email,
                 Role = user.Role.ToString(),
             
-            ExpiresAt = DateTime.UtcNow.AddDays(_tokenSettings.DurationInDays)// remove from heare add in AddJwtBearer in program class
+            ExpiresAt = DateTime.UtcNow.AddDays(_tokenSettings.ExpiryMinutes)// remove from heare add in AddJwtBearer in program class
             };
         }
     }
